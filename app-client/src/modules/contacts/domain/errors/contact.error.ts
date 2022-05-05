@@ -16,6 +16,6 @@ class InvalidContact extends ContactError {
 
 class ErrorRetrievingContact extends ContactError {
   constructor() {
-    super("Não foi possível recuperar o(s) contato(s), tente novamente.")
+    super("Não foi possível recuperar o(s) contato(s).")
   }
 }
