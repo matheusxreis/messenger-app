@@ -1,6 +1,6 @@
 abstract class UserError extends Error {
   readonly message: string;
-  readonly error: string;
+  readonly error?: string;
 
   constructor(message: string) {
     super();
@@ -16,7 +16,7 @@ class InvalidUserEmail extends UserError {
 
 class InvalidUserName extends UserError {
   constructor() {
-    super("Nome de usuário inválido, tente novamente");
+    super("Nome de usuário inválido, tente novamente.");
   }
 }
 
