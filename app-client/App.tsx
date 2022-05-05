@@ -1,37 +1,41 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ws } from './SocketTest';
+import React, { useEffect, useState } from 'react';
+import AppLoading from "expo-app-loading";
 
+import { io } from "socket.io-client";
+
+import { ThemeProvider } from 'styled-components';
+
+import { theme } from './src/global/styles/theme';
+
+import {
+  useFonts,
+  Mulish_400Regular,
+  Mulish_500Medium,
+  Mulish_600SemiBold,
+  Mulish_700Bold
+} from "@expo-google-fonts/mulish";
 
 export default function App() {
-
-
-  useEffect(()=>{
- 
-   ws.on("connect", ()=>{
-     ws.emit("oi", "oi eu estou no mobile")
-   })
-
+  const [ fontsLoaded ] = useFonts({
+    Mulish_400Regular,
+    Mulish_500Medium,
+    Mulish_600SemiBold,
+    Mulish_700Bold
+  });
   
+  if(!fontsLoaded){
+    return <AppLoading/>
+  } 
+  // useEffect(() => {
+  //   const socket = io("192.168.1.190:3333/");
+  //   socket.on("connect", () => {
+  //     socket.emit("oi", "olá")
+  //   });
+  // }, [])
   
-
-  
-  }, [])
-
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+   
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
