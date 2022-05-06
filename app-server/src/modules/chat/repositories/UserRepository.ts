@@ -1,16 +1,13 @@
 import { User } from "../entities/User";
 
 
+const users = new Array<User>()
 export class UserRepository {
-
-
-    users = new Array<User>()
-
 
     authenticateNewUser(name:string, email:string): User{
         const user = new User(name, email)
-        console.log(user)
-        this.users.push(
+       
+        users.push(
             user
         )
 
@@ -19,15 +16,15 @@ export class UserRepository {
 
     desauthenticateUser(id:string){
 
-        return this.users.filter((user:User)=>user.id !== id)
+        return users.filter((user:User)=>user.id !== id)
     }
 
     findByEmail(email:string):User|undefined{
-        return this.users.find((x:User)=>x.email === email)
+        return users.find((x:User)=>x.email === email)
     }
 
     listAllUsers():User[]{
-        return this.users;
+        return users;
     }
 
     
