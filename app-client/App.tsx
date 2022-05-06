@@ -15,28 +15,22 @@ import {
   Mulish_700Bold
 } from "@expo-google-fonts/mulish";
 import { InitialRoutes } from './src/global/routes/initialRoutes';
+import { socketService } from './src/global/services/socketService';
 
 export default function App() {
+
+
+  const { initialize } = socketService()
+
   const [ fontsLoaded ] = useFonts({
     Mulish_400Regular,
     Mulish_500Medium,
     Mulish_600SemiBold,
     Mulish_700Bold
   });
-  const socket = useRef<Socket>();
 
   useEffect(() => {
-    socket.current = io("http://192.168.1.190:3333/chat")  
-
-    socket.current.on("connect", () => {
-      socket.current.emit("authenticate", {name: "Joviolai", email: "jovi.oli000dasd4@gmail.com"})
-      // socket.current.on("connect_failed", (args) => {
-      //   console.log(args)
-      // })
-      socket.current.on("user_authenticated", (args) => {
-        console.log(args)
-      })
-    })
+    initialize()
   }, [])
   
   if(!fontsLoaded){

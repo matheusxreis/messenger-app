@@ -25,13 +25,8 @@ export class Connection {
 
         this.socket = socket;
         this.io = io;
-        
-
-
-
-
-       
-        socket.on("disconnect", (id: string)=>this.disconnect(id))
+ 
+        //socket.on("disconnect", (id: string)=>this.disconnect(id))
         socket.on("authenticate", ({name, email}: Iauthenticate)=>this.authenticate({name, email}))
         socket.on("set_messages", ({userId, message}: IsendMessages)=>this.setMessages({userId, message}))
             
@@ -51,6 +46,10 @@ export class Connection {
     }
 
     getUsers(): User[]{
+        console.log("users:", this.userRepository.listAllUsers())
+
+
+
         return this.userRepository.listAllUsers()
     }
 
@@ -59,12 +58,13 @@ export class Connection {
     }
 
     authenticate({name, email}: Iauthenticate){
-        console.log(name, email)
+        
 
         const userAlreadyExist = this.userRepository.findByEmail(email)
 
-        if(userAlreadyExist?.email === email || userAlreadyExist?.name === name){
-            return this.socket.emit("connect_failed", {error: "Username or email already connected!"})
+        if(userAlreadyExist?.email === email || userAlreadyExist?.username === name){
+             this.socket.emit("connect_failed", {error: "Username or email already connected!"})
+            return 0;
         }
 
         const user = this.userRepository.authenticateNewUser(name, email);
