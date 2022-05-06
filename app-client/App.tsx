@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import AppLoading from "expo-app-loading";
 
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 import { ThemeProvider } from 'styled-components';
 
@@ -14,6 +14,7 @@ import {
   Mulish_600SemiBold,
   Mulish_700Bold
 } from "@expo-google-fonts/mulish";
+import { InitialRoutes } from './src/global/routes/initialRoutes';
 
 export default function App() {
   const [ fontsLoaded ] = useFonts({
@@ -22,20 +23,29 @@ export default function App() {
     Mulish_600SemiBold,
     Mulish_700Bold
   });
+  const socket = useRef<Socket>();
+
+  useEffect(() => {
+    socket.current = io("http://192.168.1.190:3333/chat")  
+
+    socket.current.on("connect", () => {
+      socket.current.emit("authenticate", {name: "João", email: "jovi.oli04@gmail.com"})
+      // socket.current.on("connect_failed", (args) => {
+      //   console.log(args)
+      // })
+      socket.current.on("user_authenticated", (args) => {
+        console.log(args)
+      })
+    })
+  }, [])
   
   if(!fontsLoaded){
     return <AppLoading/>
-  } 
-  // useEffect(() => {
-  //   const socket = io("192.168.1.190:3333/");
-  //   socket.on("connect", () => {
-  //     socket.emit("oi", "olá")
-  //   });
-  // }, [])
+  }
   
   return (
     <ThemeProvider theme={theme}>
-   
+      <InitialRoutes/>
     </ThemeProvider>
   );
 }

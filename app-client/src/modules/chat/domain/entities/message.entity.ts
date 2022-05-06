@@ -4,9 +4,9 @@ class MessageEntity {
   readonly message: string;
   readonly timestamp: string;
 
-  constructor(userId: string, message: string) {
-    this.id = Math.random().toString();
-    this.timestamp = Date.now().toString();
+  constructor(id: string, timestamp: string, userId: string, message: string) {
+    this.id = id;
+    this.timestamp = timestamp;
     this.userId = userId;
     this.message = message;
   }

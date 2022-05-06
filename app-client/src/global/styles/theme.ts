@@ -4,7 +4,8 @@ export const theme = {
     dark: "#001A83",
     darkMode: "#375FFF",
     light: "#879FFF",
-    background: "#D2D5F9"
+    background: "#FFFFFF",
+    text: "#0F1828"
   },
   fonts: {
     regular: "Mulish_400Regular",
