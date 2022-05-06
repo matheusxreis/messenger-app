@@ -27,12 +27,16 @@ export function socketService(){
       //   })
       })
   
-      //socket.current.emit("authenticate", {name: "cgvvrfgd", email: "wewewew@gmail.com"})
+      socket.current.emit("authenticate", {name: "1231231", email: "dsads312312312adas@23423.com"})
     }
 
+    function getSocket() {
+      return socket;
+    }
 
     return {
-        initialize
+        initialize,
+        getSocket
     }
 
 }
