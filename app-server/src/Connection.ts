@@ -1,3 +1,6 @@
+import { Message } from "./modules/chat/entities/Message";
+import { User } from "./modules/chat/entities/User";
+import { MessageRepository } from "./modules/chat/repositories/MessageRepository";
 import { UserRepository } from "./modules/chat/repositories/UserRepository";
 
 
@@ -13,13 +16,12 @@ interface IsendMessages {
 
 export class Connection {
     
-    socket;
-    io;
-    
+ 
 
-    constructor(io: any, 
-            socket:any,
-            private userRepository: UserRepository){
+    constructor(private io: any, 
+            private socket:any,
+            private userRepository: UserRepository,
+            private messageRepository: MessageRepository){
 
         this.socket = socket;
         this.io = io;
@@ -31,18 +33,25 @@ export class Connection {
        
         socket.on("disconnect", (id: string)=>this.disconnect(id))
         socket.on("authenticate", ({name, email}: Iauthenticate)=>this.authenticate({name, email}))
-        socket.on("send_messages", ({userId, message}: IsendMessages)=>this.sendMessages({userId, message}))
-       
+        socket.on("set_messages", ({userId, message}: IsendMessages)=>this.setMessages({userId, message}))
+            
+        socket.emit("get_messages", this.getMessages())
+        socket.emit("get_users", this.getUsers())
         
     }
 
-    sendMessages({userId, message}: IsendMessages){}
+    setMessages({userId, message}: IsendMessages){
+        this.messageRepository.addNewMessage(userId, message)
+    }
 
+    getMessages(): Message[]{
 
-    getMessages(args:any){
+       return this.messageRepository.listAllMessages()
+        
+    }
 
-        console.log(this.socket.id)
-        console.log(args)
+    getUsers(): User[]{
+        return this.userRepository.listAllUsers()
     }
 
     disconnect(id:string){   

@@ -26,6 +26,10 @@ export class UserRepository {
         return this.users.find((x:User)=>x.email === email)
     }
 
+    listAllUsers():User[]{
+        return this.users;
+    }
+
     
 
 
