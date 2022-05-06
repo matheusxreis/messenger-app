@@ -1,4 +1,4 @@
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
 export const Container = styled.View`
@@ -16,4 +16,5 @@ export const Message = styled.Text`
   color: ${({ theme }) => theme.colors.text};
   font-size: ${RFValue(24)}px;
   text-align: center;
+  margin-bottom: ${RFPercentage(10)}px;
 `;

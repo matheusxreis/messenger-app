@@ -29,7 +29,7 @@ export default function App() {
     socket.current = io("http://192.168.1.190:3333/chat")  
 
     socket.current.on("connect", () => {
-      socket.current.emit("authenticate", {name: "João", email: "jovi.oli04@gmail.com"})
+      socket.current.emit("authenticate", {name: "Joviolai", email: "jovi.oli000dasd4@gmail.com"})
       // socket.current.on("connect_failed", (args) => {
       //   console.log(args)
       // })

@@ -8,17 +8,15 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 export function TabRoutes() {
   return (
-  <NavigationContainer>
       <Navigator initialRouteName="Chat">
+        <Screen
+          name="Chat"
+          component={Chat}
+        />
       <Screen
         name="Contacts"
         component={Contacts}
       />
-      <Screen
-        name="Chat"
-        component={Chat}
-      />
     </Navigator>
-  </NavigationContainer>
   );
 }
