@@ -6,7 +6,8 @@ export const theme = {
     light: "#879FFF",
     background: "#FFFFFF",
     text: "#0F1828",
-    input: "#F7F7FC"
+    input: "#F7F7FC",
+    chatArea: "#EDEDED"
   },
   fonts: {
     regular: "Mulish_400Regular",

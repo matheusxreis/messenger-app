@@ -8,7 +8,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 export function TabRoutes() {
   return (
-      <Navigator initialRouteName="Chat">
+      <Navigator initialRouteName="Chat" screenOptions={{headerShown: false}}>
         <Screen
           name="Chat"
           component={Chat}

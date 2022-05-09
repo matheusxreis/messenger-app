@@ -23,6 +23,10 @@ export function Login({ navigation }) {
     repository.userAuthenticate(username, email);
   }
 
+  function navigationToAppModule() {
+    navigation.navigate('App');
+  }
+
   return (
     <Component.Container onPress={Keyboard.dismiss} activeOpacity={1}>
       <Component.Header>
@@ -35,7 +39,7 @@ export function Login({ navigation }) {
         <Component.Input placeholder="Username (Required)" onChangeText={setUsername} keyboardType={"email-address"}/>
         <Component.Input placeholder="E-mail (Required)" onChangeText={setEmail}/>
       </Component.InputContainer>
-      <PrimaryButton text="Save" onPress={login} />
+      <PrimaryButton text="Save" onPress={navigationToAppModule} />
     </Component.Container>
   );
 }
