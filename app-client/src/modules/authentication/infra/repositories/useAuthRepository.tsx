@@ -7,8 +7,8 @@ import { IAuthRepository } from "../../domain/repositories/IAuthRepository";
 
 
 export function useAuthRepository(socket: React.MutableRefObject<Socket>):IAuthRepository{
-    
-    
+    const [user, setUser] = useState<UserEntity>({} as UserEntity);
+
     const [{ data }, dispatch] = useReducer((state, action) => {
         if(action.type === "GET"){
             state.data = action.payload.data;
@@ -17,20 +17,22 @@ export function useAuthRepository(socket: React.MutableRefObject<Socket>):IAuthR
         return state
     }, {data: []})
 
-    // socket?.current?.on("get_users", (user) => {
-        //     setUsersX(user)
-        //     console.log("USERS ARRAY", usersX)
-        //     console.log("funcionou")
-        //     console.log(user)
-        //     console.log("USERS REPO", usersX)
-        // })
-
     function userAuthenticate(name: string, email: string){
-
-        const user = socket.current.emit("authenticate", {name, email});
-
-       
+        socket.current.emit("authenticate", {name, email});
+        getUserAuthenticate();
     }
+
+    function getUserAuthenticate(){
+        socket.current.on("user_authenticated", (args: UserEntity) => {
+            setTimeout(() => {
+                setUser(args);
+                console.log("USER STATE")
+                console.log(user)
+            }, 1000)
+
+        });
+    }
+
 
     function userDisconnect(id: string){
 
@@ -39,15 +41,12 @@ export function useAuthRepository(socket: React.MutableRefObject<Socket>):IAuthR
     }
     
     async function listAllUsers(){
-         socket.current.on("get_users", async (data) =>  {
-            console.log("Data do dispatch", data)
+        socket.current.on("get_users", async (data) => {
          dispatch({type: "GET", payload: {data: data}})
 
         })
 
         setTimeout(() => {
-            console.log("Data apos o dispatch", data)
-
         }, 1000)
 
         return data

@@ -1,47 +1,41 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import * as Component from "./style";
 
 import BackIcon from "../../../../../global/assets/icons/back.svg";
-import { FlatList, View, Text } from "react-native";
+import { Keyboard } from "react-native";
+
+import { PrimaryButton } from "../../../../../global/views/components/primaryButton";
 import { useAuthRepository } from "../../../infra/repositories/useAuthRepository";
 import { socketService } from "../../../../../global/services/socketService";
 
-export function Login() {
-  const [users, setUsers] = useState([]);
-  const { getSocket } = socketService()
-  const socket = getSocket();
-  const repository = useAuthRepository(socket);
-  
-  async function getData() {
-    
-    const data = await repository.listAllUsers();
-    setUsers(data);
+export function Login({ navigation }) {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
-    console.log("DATA DO LOGIN",data);
+  const socket = socketService().getSocket();
+  const repository = useAuthRepository(socket);
+
+  function navigationToWelcome() {
+    navigation.pop();
   }
 
-  useEffect(() => {
-    getData()
-  },[])
+  function login(){
+    repository.userAuthenticate(username, email);
+  }
 
   return (
-    <Component.Container>
+    <Component.Container onPress={Keyboard.dismiss} activeOpacity={1}>
       <Component.Header>
-      <Component.BackIconButton></Component.BackIconButton>
+      <Component.BackIconButton onPress={navigationToWelcome}>
       <BackIcon/>
+      </Component.BackIconButton>
       <Component.Title>Your Profile</Component.Title>
       </Component.Header>
-      <FlatList
-        data={users}
-        renderItem={(item) => {
-          return (
-            <View>
-              <Text>{item.item.name}</Text>
-            </View>
-          )
-        }}
-
-      />
+      <Component.InputContainer>
+        <Component.Input placeholder="Username (Required)" onChangeText={setUsername} keyboardType={"email-address"}/>
+        <Component.Input placeholder="E-mail (Required)" onChangeText={setEmail}/>
+      </Component.InputContainer>
+      <PrimaryButton text="Save" onPress={login} />
     </Component.Container>
   );
 }
