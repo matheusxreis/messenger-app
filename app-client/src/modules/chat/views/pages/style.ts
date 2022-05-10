@@ -25,7 +25,6 @@ export const Title = styled.Text`
 `;
 
 export const ActionsWrapper = styled.View`
-  width: 20%;
   height: 100%;
 
   flex-direction: row;

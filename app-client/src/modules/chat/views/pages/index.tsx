@@ -29,7 +29,7 @@ export function Chat() {
       <Component.Container>
           <Component.Header>
             
-            <Component.Title>CHAT</Component.Title>
+            <Component.Title>Chat</Component.Title>
 
             <Component.ActionsWrapper>
               <Component.Action>
