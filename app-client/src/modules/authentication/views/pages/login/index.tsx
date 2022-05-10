@@ -7,6 +7,7 @@ import { Keyboard } from "react-native";
 import { PrimaryButton } from "../../../../../global/views/components/primaryButton";
 import { useAuthRepository } from "../../../infra/repositories/useAuthRepository";
 import { socketService } from "../../../../../global/services/socketService";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Login({ navigation }) {
   const [username, setUsername] = useState("");
@@ -28,7 +29,8 @@ export function Login({ navigation }) {
   }
 
   return (
-    <Component.Container onPress={Keyboard.dismiss} activeOpacity={1}>
+   <SafeAreaView style={{ flex: 1 }}>
+      <Component.Container onPress={Keyboard.dismiss} activeOpacity={1}>
       <Component.Header>
       <Component.BackIconButton onPress={navigationToWelcome}>
       <BackIcon/>
@@ -41,5 +43,6 @@ export function Login({ navigation }) {
       </Component.InputContainer>
       <PrimaryButton text="Save" onPress={navigationToAppModule} />
     </Component.Container>
+   </SafeAreaView>
   );
 }
